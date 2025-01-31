@@ -112,10 +112,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Checking for apnea
     ArrayList<Long> arr = new ArrayList<>();
 
-    public boolean checkSleepApnea(int thresholdBpm, int thresholdSpo2){
+    public boolean checkSleepApnea(int thresholdBpm, int thresholdSpo2) {
         SQLiteDatabase db = getReadableDatabase();
-        String query = "SELECT * FROM Sleep WHERE bpm < 70 AND spo2 < 90 ORDER BY time ASC"; // Adjust table name and order column
+        String query = "SELECT * FROM Sleep WHERE bpm < 70 AND spo2 < 90 ORDER BY time ASC";
         Cursor cursor = db.rawQuery(query, null);
+
+        arr.clear(); // Clear the array before starting
 
         if (cursor != null) {
             try {
@@ -129,32 +131,36 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
                     // Check if the current row meets the threshold
                     if (bpm < thresholdBpm && spo2 < thresholdSpo2) {
-                        // Check next 5 rows
+                        ArrayList<Long> tempTimestamps = new ArrayList<>();
                         boolean allBelowThreshold = true;
 
-                        for (int i = 0; i < 5; i++) {
+                        tempTimestamps.add(cursor.getLong(timeIndex)); // Add current timestamp
+
+                        // Check the next 5 rows
+                        for (int i = 0; i < 4; i++) { // Only 4 more iterations since 1st is already added
                             if (!cursor.moveToNext()) {
-                                allBelowThreshold = false; // If not enough rows
+                                allBelowThreshold = false; // Not enough rows
                                 break;
                             }
 
                             bpm = cursor.getInt(bpmIndex);
                             spo2 = cursor.getInt(spo2Index);
-                            Long time = cursor.getLong(timeIndex);
-                            arr.add(time);
 
                             if (bpm >= thresholdBpm || spo2 >= thresholdSpo2) {
                                 allBelowThreshold = false;
-                                arr.clear();
                                 break;
                             }
+
+                            tempTimestamps.add(cursor.getLong(timeIndex)); // Add timestamp
                         }
 
                         if (allBelowThreshold) {
+                            // If all rows meet the condition, add timestamps to the main array
+                            arr.addAll(tempTimestamps);
                             return true; // Sleep apnea condition detected
                         } else {
-                            // Move cursor back to the row after the initial one
-                            cursor.moveToPosition(cursor.getPosition() - 5);
+                            // Move back to the row after the initial one
+                            cursor.moveToPosition(cursor.getPosition() - tempTimestamps.size() + 1);
                         }
                     }
                 }
@@ -162,8 +168,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.close();
             }
         }
+
         return false; // No apnea detected
     }
+
 
     public ArrayList<Long> timestamps(){
         return arr;
@@ -190,8 +198,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         String[] selectionArgs = {String.valueOf(startDay),String.valueOf(endDay)};
 
-        Long firstTime = 0L;
-        Long lastTime = 0L;
+        Long firstTime = 00000000000000L;
+        Long lastTime = 00000000000000L;
 
         try (Cursor cursor = db.rawQuery(query, selectionArgs)) {
             if (cursor != null && cursor.moveToFirst()) {
