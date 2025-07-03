@@ -42,11 +42,11 @@ The **Sleep Apnea Detection App** is an Android application designed to monitor 
 ---
 
 ## Screenshots
-![image](https://github.com/user-attachments/assets/ef838110-5cbb-4bec-986b-17effbf56b7a)   ![image](https://github.com/user-attachments/assets/2242f922-251a-4c8d-8b58-82cd9ed5f71b)
+![image](https://github.com/user-attachments/assets/ef838110-5cbb-4bec-986b-17effbf56b7a)![image](https://github.com/user-attachments/assets/2242f922-251a-4c8d-8b58-82cd9ed5f71b)
 
-![image](https://github.com/user-attachments/assets/07ce3c7e-67f0-4725-a5a6-a9ef64a1f6bc)   ![image](https://github.com/user-attachments/assets/3cc1d9de-74a2-43a2-bad9-4ffa94af84b2)
+![image](https://github.com/user-attachments/assets/07ce3c7e-67f0-4725-a5a6-a9ef64a1f6bc)![image](https://github.com/user-attachments/assets/3cc1d9de-74a2-43a2-bad9-4ffa94af84b2)
 
-![image](https://github.com/user-attachments/assets/e802253b-4f89-4a17-9f74-064618a6b2c8)   ![image](https://github.com/user-attachments/assets/92864d2d-b8f3-4fcc-be20-e7eaae4918b5)
+![image](https://github.com/user-attachments/assets/e802253b-4f89-4a17-9f74-064618a6b2c8)![image](https://github.com/user-attachments/assets/92864d2d-b8f3-4fcc-be20-e7eaae4918b5)
 
 ![image](https://github.com/user-attachments/assets/1a93f46a-dc03-4c5f-a883-672b7e981a02)
 
